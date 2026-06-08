@@ -333,18 +333,25 @@ footer{background:var(--dk);padding:36px 20px calc(var(--bot-h) + var(--safe-bot
 <!-- HOME -->
 <div id="homeView" class="view active">
   <section class="hero">
-    <div class="hero-video-wrap">
+    <div class="hero-video-wrap" id="heroWrap">
       <!-- MOBILE: single vertical video -->
-      <video class="hero-vid-mobile" autoplay muted loop playsinline preload="auto"
-        src="https://res.cloudinary.com/dnixftrzb/video/upload/q_auto,f_auto/copy_00FE8C46-BA4F-46C1-B911-BCA5F6C5D6C3_lmzzlc">
+      <video class="hero-vid-mobile" id="heroVid" autoplay muted loop playsinline webkit-playsinline
+        poster="https://res.cloudinary.com/dnixftrzb/image/upload/c_fill,w_900,h_1200,g_north,q_auto,f_auto/IMG_3836_zkzs4g"
+        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <source src="https://res.cloudinary.com/dnixftrzb/video/upload/q_auto,vc_h264,f_mp4/copy_00FE8C46-BA4F-46C1-B911-BCA5F6C5D6C3_lmzzlc.mp4" type="video/mp4">
+        <source src="https://res.cloudinary.com/dnixftrzb/video/upload/q_auto,f_webm/copy_00FE8C46-BA4F-46C1-B911-BCA5F6C5D6C3_lmzzlc.webm" type="video/webm">
       </video>
       <!-- DESKTOP: two videos side by side -->
       <div class="hero-vid-desktop">
-        <video autoplay muted loop playsinline preload="auto"
-          src="https://res.cloudinary.com/dnixftrzb/video/upload/q_auto,f_auto/copy_00FE8C46-BA4F-46C1-B911-BCA5F6C5D6C3_lmzzlc">
+        <video autoplay muted loop playsinline
+          poster="https://res.cloudinary.com/dnixftrzb/image/upload/c_fill,w_900,h_1200,g_north,q_auto,f_auto/IMG_3836_zkzs4g"
+          style="width:50%;height:100%;object-fit:cover;">
+          <source src="https://res.cloudinary.com/dnixftrzb/video/upload/q_auto,vc_h264,f_mp4/copy_00FE8C46-BA4F-46C1-B911-BCA5F6C5D6C3_lmzzlc.mp4" type="video/mp4">
         </video>
-        <video autoplay muted loop playsinline preload="auto"
-          src="https://res.cloudinary.com/dnixftrzb/video/upload/q_auto,f_auto,e_hflip/copy_00FE8C46-BA4F-46C1-B911-BCA5F6C5D6C3_lmzzlc">
+        <video autoplay muted loop playsinline
+          poster="https://res.cloudinary.com/dnixftrzb/image/upload/c_fill,w_900,h_1200,g_north,q_auto,f_auto/IMG_3836_zkzs4g"
+          style="width:50%;height:100%;object-fit:cover;transform:scaleX(-1);">
+          <source src="https://res.cloudinary.com/dnixftrzb/video/upload/q_auto,vc_h264,f_mp4/copy_00FE8C46-BA4F-46C1-B911-BCA5F6C5D6C3_lmzzlc.mp4" type="video/mp4">
         </video>
       </div>
     </div>
@@ -353,7 +360,7 @@ footer{background:var(--dk);padding:36px 20px calc(var(--bot-h) + var(--safe-bot
       <h1 class="hero-t">Tu hogar,<br>tu <em>obra<br>maestra.</em></h1>
       <p class="hero-sub">Decoración, lustres, muebles y papel de pared premium.</p>
       <p class="hero-count"><strong>+1,000 productos</strong> disponibles en tienda</p>
-      <p class="hero-hours"><span class="dot"></span> Abierto hoy: 07:00 – 19:00 hs</p>
+      <p class="hero-hours" id="heroHours"><span class="dot"></span> Abierto hoy: 07:00 – 19:00 hs</p>
       <div class="hero-btns">
         <button class="btn-hero-main" id="btnVerProductos" onclick="showV('catalogView','r')">Ver productos →</button>
         <div class="hero-row2">
@@ -427,27 +434,13 @@ footer{background:var(--dk);padding:36px 20px calc(var(--bot-h) + var(--safe-bot
   </section>
 
   <!-- SOCIAL PROOF -->
-  <section class="social-proof fu">
+  <section class="social-proof fu" id="socialProofSec">
     <div class="sh">
       <span class="slabel tc">En hogares reales</span>
       <h2 class="stitle wh">La tienda que <em>transforma</em> espacios</h2>
     </div>
-    <div class="sp-grid">
-      <div class="sp-card">
-        <div class="sp-card-ph"><span>📸</span><span>Pronto: fotos de clientes</span></div>
-      </div>
-      <div class="sp-card">
-        <div class="sp-card-ph"><span>🏠</span><span>Tu hogar podría estar aquí</span></div>
-      </div>
-      <div class="sp-card">
-        <div class="sp-card-ph"><span>✨</span><span>Compartí tu espacio con nosotros</span></div>
-      </div>
-      <div class="sp-card" style="cursor:pointer;" onclick="window.open(document.getElementById('bn-wa').href,'_blank')">
-        <div class="sp-card-ph" style="background:rgba(194,24,91,0.12);border:1px solid rgba(194,24,91,0.2);border-radius:12px;">
-          <span>💬</span>
-          <span style="color:var(--m);font-weight:600;">Envianos tu foto</span>
-        </div>
-      </div>
+    <div class="sp-grid" id="spGrid">
+      <!-- cargado dinámicamente desde admin -->
     </div>
   </section>
 
@@ -670,6 +663,36 @@ function imgUrl(f,sz='600x600'){
   return`https://res.cloudinary.com/${CLD}/image/upload/c_fill,w_${w},h_${h},g_auto,q_auto,f_auto/${f}`;
 }
 
+// SOCIAL PROOF
+async function loadSocialProof(){
+  const grid = document.getElementById('spGrid');
+  if(!grid) return;
+  try {
+    const {data} = await sb.from('social_proof').select('*').eq('activo', true).order('orden');
+    if(data && data.length > 0) {
+      grid.innerHTML = data.map(item => {
+        const img = item.foto_url ? (item.foto_url.startsWith('http') ? item.foto_url : `https://res.cloudinary.com/${CLD}/image/upload/c_fill,w_400,h_400,g_auto,q_auto,f_auto/${item.foto_url}`) : null;
+        return img
+          ? `<div class="sp-card"><img src="${img}" alt="${item.titulo||''}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;"><div class="sp-card-ov"><span class="sp-card-txt">${item.titulo||''}</span></div></div>`
+          : `<div class="sp-card"><div class="sp-card-ph"><span style="font-size:36px">${item.icono||'📸'}</span><span>${item.titulo||''}</span></div></div>`;
+      }).join('') + `<div class="sp-card" style="cursor:pointer" onclick="window.open(document.getElementById('bn-wa').href,'_blank')"><div class="sp-card-ph" style="background:rgba(194,24,91,0.12);border:1px solid rgba(194,24,91,0.2);border-radius:12px;"><span style="font-size:32px">💬</span><span style="color:var(--m);font-weight:600;font-size:12px">Envianos tu foto</span></div></div>`;
+    } else {
+      // Default placeholders
+      grid.innerHTML = `
+        <div class="sp-card"><div class="sp-card-ph"><span style="font-size:36px">📸</span><span>Pronto: fotos de clientes</span></div></div>
+        <div class="sp-card"><div class="sp-card-ph"><span style="font-size:36px">🏠</span><span>Tu hogar podría estar aquí</span></div></div>
+        <div class="sp-card"><div class="sp-card-ph"><span style="font-size:36px">✨</span><span>Compartí tu espacio</span></div></div>
+        <div class="sp-card" style="cursor:pointer" onclick="window.open(document.getElementById('bn-wa').href,'_blank')"><div class="sp-card-ph" style="background:rgba(194,24,91,0.12);border:1px solid rgba(194,24,91,0.2);border-radius:12px;"><span style="font-size:32px">💬</span><span style="color:var(--m);font-weight:600;font-size:12px">Envianos tu foto</span></div></div>`;
+    }
+  } catch(e) {
+    grid.innerHTML = `
+      <div class="sp-card"><div class="sp-card-ph"><span style="font-size:36px">📸</span><span>Pronto: fotos de clientes</span></div></div>
+      <div class="sp-card"><div class="sp-card-ph"><span style="font-size:36px">🏠</span><span>Tu hogar podría estar aquí</span></div></div>
+      <div class="sp-card"><div class="sp-card-ph"><span style="font-size:36px">✨</span><span>Compartí tu espacio</span></div></div>
+      <div class="sp-card" style="cursor:pointer" onclick="window.open(document.getElementById('bn-wa').href,'_blank')"><div class="sp-card-ph" style="background:rgba(194,24,91,0.12);border:1px solid rgba(194,24,91,0.2);border-radius:12px;"><span style="font-size:32px">💬</span><span style="color:var(--m);font-weight:600;font-size:12px">Envianos tu foto</span></div></div>`;
+  }
+}
+
 // RIPPLE on main CTA
 document.addEventListener('DOMContentLoaded',()=>{
   const btn=document.getElementById('btnVerProductos');
@@ -744,6 +767,7 @@ function catCard(cat,big=false){
 // LOAD HOME
 async function loadHome(){
   loadHero();
+  loadSocialProof();
   const{data:cats}=await sb.from('categorias').select('*').eq('activa',true).order('orden');
   if(cats){
     for(const c of cats){
