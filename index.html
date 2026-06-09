@@ -90,15 +90,18 @@ nav.top{
     display:flex;position:absolute;inset:0;width:100%;height:100%;
   }
   .hero-vid-desktop .hvid-left{
-    width:50%;height:100%;object-fit:cover;flex-shrink:0;
+    width:55%;height:100%;flex-shrink:0;background:var(--dk);
   }
   .hero-vid-desktop .hvid-right{
-    width:50%;height:100%;object-fit:cover;flex-shrink:0;
-    background:url('https://res.cloudinary.com/dnixftrzb/image/upload/c_fill,w_800,h_1200,g_auto,q_auto,f_auto/IMG_3836_zkzs4g') center/cover no-repeat;
+    width:45%;height:100%;object-fit:cover;flex-shrink:0;
+    background:url('https://res.cloudinary.com/dnixftrzb/image/upload/c_fill,w_900,h_1200,g_center,q_auto,f_auto/IMG_3836_zkzs4g') center 30%/cover no-repeat;
   }
 }
 
 .hero-ov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.08) 0%,rgba(0,0,0,0.2) 35%,rgba(0,0,0,0.9) 80%,rgba(0,0,0,0.97) 100%);}
+@media(min-width:768px){
+  .hero-ov{background:linear-gradient(to right, transparent 0%, transparent 54%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.1) 100%);}
+}
 .hero-c{position:relative;z-index:2;padding:0 22px calc(var(--bot-h) + var(--safe-bot) + 28px);width:100%;}
 .hero-t{font-family:'Cormorant Garamond',serif;font-size:clamp(46px,12vw,76px);font-weight:300;color:#fff;line-height:0.95;margin-bottom:12px;text-shadow:0 2px 24px rgba(0,0,0,0.5);}
 .hero-t em{font-style:italic;color:var(--m);}
@@ -522,12 +525,9 @@ footer{background:var(--dk);padding:36px 20px calc(var(--bot-h) + var(--safe-bot
         <source src="https://res.cloudinary.com/dnixftrzb/video/upload/q_auto,vc_h264,f_mp4/copy_00FE8C46-BA4F-46C1-B911-BCA5F6C5D6C3_lmzzlc.mp4" type="video/mp4">
         <source src="https://res.cloudinary.com/dnixftrzb/video/upload/q_auto,f_webm/copy_00FE8C46-BA4F-46C1-B911-BCA5F6C5D6C3_lmzzlc.webm" type="video/webm">
       </video>
-      <!-- DESKTOP: video left + store photo right -->
+      <!-- DESKTOP/TABLET: black left + store photo right -->
       <div class="hero-vid-desktop">
-        <video class="hvid-left" autoplay muted loop playsinline
-          poster="https://res.cloudinary.com/dnixftrzb/image/upload/c_fill,w_900,h_1200,g_north,q_auto,f_auto/IMG_3836_zkzs4g">
-          <source src="https://res.cloudinary.com/dnixftrzb/video/upload/q_auto,vc_h264,f_mp4/copy_00FE8C46-BA4F-46C1-B911-BCA5F6C5D6C3_lmzzlc.mp4" type="video/mp4">
-        </video>
+        <div class="hvid-left"></div>
         <div class="hvid-right"></div>
       </div>
     </div>
