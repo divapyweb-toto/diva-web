@@ -13,7 +13,8 @@
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <title>DIVA Design — Decoración & Hogar | Ciudad del Este</title>
-<link rel="icon" href="https://res.cloudinary.com/dnixftrzb/image/upload/c_fill,w_32,h_32/IMG_3836_zkzs4g" type="image/jpeg">
+<link rel="icon" href="https://res.cloudinary.com/dnixftrzb/image/upload/c_fill,w_32,h_32,q_auto/IMG_3982_ddapzt" type="image/jpeg">
+<link rel="apple-touch-icon" href="https://res.cloudinary.com/dnixftrzb/image/upload/c_fill,w_180,h_180,q_auto/IMG_3982_ddapzt">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -459,6 +460,159 @@ footer{background:var(--dk);padding:36px 20px calc(var(--bot-h) + var(--safe-bot
 .fu.in{opacity:1;transform:none;}
 #homeView{padding-top:calc(var(--nav-h) + var(--safe-top));}
 #homeView .hero{margin-top:calc(-1*(var(--nav-h) + var(--safe-top)));}
+
+/* ═══════════════════════════════════════
+   PREMIUM ANIMATION SYSTEM
+   Every animation has a purpose:
+   - Feedback: confirms user action
+   - Guidance: directs attention
+   - Polish: signals quality
+═══════════════════════════════════════ */
+
+/* 1. PAGE TRANSITIONS — slide feels native, not jarring */
+@keyframes slideInR{from{transform:translateX(6%);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes slideInL{from{transform:translateX(-4%);opacity:0.4}to{transform:translateX(0);opacity:1}}
+.view.anim-r{animation:slideInR .3s cubic-bezier(.22,.68,0,1.2) both;}
+.view.anim-l{animation:slideInL .25s cubic-bezier(.25,.46,.45,.94) both;}
+
+/* 2. RIPPLE — tactile button feedback */
+.ripple-wrap{position:relative;overflow:hidden;}
+.ripple{
+  position:absolute;border-radius:50%;
+  background:rgba(255,255,255,0.22);
+  transform:scale(0);pointer-events:none;
+  animation:ripple-out .55s ease-out forwards;
+}
+@keyframes ripple-out{
+  to{transform:scale(4);opacity:0;}
+}
+
+/* 3. MAIN CTA BUTTON — pulse to draw attention, satisfying press */
+.btn-hero-main{
+  position:relative;overflow:hidden;
+  transition:transform .15s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease;
+}
+.btn-hero-main:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 32px rgba(194,24,91,0.55) !important;
+}
+.btn-hero-main:active{transform:scale(0.97) !important;box-shadow:0 2px 12px rgba(194,24,91,0.3) !important;}
+@keyframes pulse-cta{
+  0%,100%{box-shadow:0 4px 24px rgba(194,24,91,0.45);}
+  50%{box-shadow:0 4px 36px rgba(194,24,91,0.75),0 0 0 6px rgba(194,24,91,0.08);}
+}
+.btn-hero-main{animation:pulse-cta 2.8s ease-in-out infinite;}
+.btn-hero-main:hover,.btn-hero-main:active{animation:none;}
+
+/* 4. SECONDARY BUTTONS */
+.btn-hero-sec{transition:background .2s ease,transform .15s ease,border-color .2s ease;}
+.btn-hero-sec:hover{background:rgba(255,255,255,0.15) !important;border-color:rgba(255,255,255,0.5) !important;transform:translateY(-1px);}
+.btn-hero-sec:active{transform:scale(0.97);}
+
+/* 5. PRODUCT CARDS — lift on hover, instant on touch */
+.pc{transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s ease;}
+.pc:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.4);}
+.pc:active{transform:scale(0.97) !important;box-shadow:none !important;}
+.pimg img{transition:transform .5s ease;}
+.pc:hover .pimg img{transform:scale(1.05);}
+
+/* 6. CATEGORY CARDS — same lift system */
+.cc{transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s ease;}
+.cc:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.5);}
+.cc:active{transform:scale(0.97) !important;}
+.cc-img{transition:transform .5s ease;}
+.cc:hover .cc-img{transform:scale(1.04);}
+
+/* 7. BOTTOM NAV — active tab spring + icon bounce */
+.bot-btn{transition:color .2s ease;}
+.bot-btn .bot-icon{transition:transform .2s cubic-bezier(.34,1.56,.64,1);}
+.bot-btn.active .bot-icon{transform:scale(1.18) translateY(-1px);}
+.bot-btn:active .bot-icon{transform:scale(0.9);}
+
+/* 8. NAV LOGO — subtle scale on press */
+.logo{transition:opacity .2s ease;}
+.logo:active{opacity:0.7;}
+.nav-desktop-links a{
+  position:relative;
+  transition:color .2s ease;
+}
+.nav-desktop-links a::after{
+  content:'';position:absolute;bottom:-2px;left:0;right:0;
+  height:1px;background:var(--m);
+  transform:scaleX(0);transform-origin:center;
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.nav-desktop-links a:hover::after{transform:scaleX(1);}
+.nav-desktop-links a:hover{color:#fff !important;}
+
+/* 9. WA FLOAT BUTTON — breathes to draw attention */
+@keyframes wa-breathe{
+  0%,100%{transform:scale(1);box-shadow:0 4px 20px rgba(37,211,102,0.4);}
+  50%{transform:scale(1.06);box-shadow:0 6px 28px rgba(37,211,102,0.65);}
+}
+.waf{animation:wa-breathe 2.5s ease-in-out infinite;}
+.waf:hover,.waf:active{animation:none;transform:scale(1.1);}
+
+/* 10. FILTER TAGS — spring selection */
+.ftag{transition:all .18s cubic-bezier(.34,1.56,.64,1);}
+.ftag:active{transform:scale(0.93);}
+.ftag.active{transform:scale(1.05);}
+.cf-tag{transition:all .18s cubic-bezier(.34,1.56,.64,1);}
+.cf-tag:active{transform:scale(0.93);}
+.cf-tag.active{transform:scale(1.04);}
+
+/* 11. SEARCH BAR — smooth slide down */
+@keyframes sbar-in{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.sbar.open{animation:sbar-in .22s cubic-bezier(.25,.46,.45,.94) both;}
+
+/* 12. SCROLL REVEAL — staggered for sections */
+.fu{transition:opacity .6s ease, transform .6s cubic-bezier(.25,.46,.45,.94);}
+.fu.stagger-1{transition-delay:.06s;}
+.fu.stagger-2{transition-delay:.12s;}
+.fu.stagger-3{transition-delay:.18s;}
+
+/* 13. PRODUCT DETAIL — image fade in */
+.gallery-slide img{
+  animation:img-reveal .4s ease both;
+}
+@keyframes img-reveal{from{opacity:0;transform:scale(1.02)}to{opacity:1;transform:scale(1)}}
+
+/* 14. GALLERY DOTS */
+.gdot{transition:width .3s cubic-bezier(.34,1.56,.64,1),background .3s ease;}
+
+/* 15. WA BUTTON IN PRODUCT — draw attention */
+.dwa{
+  transition:transform .15s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease;
+  position:relative;overflow:hidden;
+}
+.dwa:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,211,102,0.5);}
+.dwa:active{transform:scale(0.98);}
+
+/* 16. TRUST ICONS */
+.trust-icon{transition:transform .2s cubic-bezier(.34,1.56,.64,1);}
+.trust-item:hover .trust-icon{transform:scale(1.15) rotate(-5deg);}
+
+/* 17. SOCIAL PROOF CARDS */
+.sp-card{transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s ease;}
+.sp-card:hover{transform:scale(1.02);box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+
+/* 18. TICKER pause on hover */
+.ticker:hover .tick-in{animation-play-state:paused;}
+
+/* 19. LOGO NAV — shimmer on load */
+@keyframes logo-shimmer{
+  0%{opacity:0;letter-spacing:6px;}
+  100%{opacity:1;letter-spacing:3px;}
+}
+.logo-main{animation:logo-shimmer .6s ease .1s both;}
+
+/* 20. HERO TEXT — staggered reveal on load */
+@keyframes hero-up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.hero-t{animation:hero-up .7s cubic-bezier(.25,.46,.45,.94) .2s both;}
+.hero-sub{animation:hero-up .7s cubic-bezier(.25,.46,.45,.94) .35s both;}
+.hero-count{animation:hero-up .7s cubic-bezier(.25,.46,.45,.94) .45s both;}
+.hero-hours{animation:hero-up .7s cubic-bezier(.25,.46,.45,.94) .5s both;}
+.hero-btns{animation:hero-up .7s cubic-bezier(.25,.46,.45,.94) .58s both;}
 </style>
 </head>
 <body>
@@ -873,17 +1027,38 @@ async function loadSocialProof(){
   }
 }
 
-// RIPPLE on main CTA
+// RIPPLE — applies to any element with ripple-wrap class or btn-hero-main
+function addRipple(el, e){
+  const rect=el.getBoundingClientRect();
+  const r=document.createElement('span');
+  const d=Math.max(el.clientWidth,el.clientHeight);
+  const x=(e.clientX||e.touches?.[0]?.clientX||rect.left+rect.width/2)-rect.left-d/2;
+  const y=(e.clientY||e.touches?.[0]?.clientY||rect.top+rect.height/2)-rect.top-d/2;
+  r.className='ripple';
+  r.style.cssText=`width:${d}px;height:${d}px;left:${x}px;top:${y}px;`;
+  el.appendChild(r);
+  setTimeout(()=>r.remove(),600);
+}
+
 document.addEventListener('DOMContentLoaded',()=>{
-  const btn=document.getElementById('btnVerProductos');
-  if(btn)btn.addEventListener('click',function(e){
-    const rect=this.getBoundingClientRect();
-    const r=document.createElement('span');
-    const d=Math.max(this.clientWidth,this.clientHeight);
-    r.className='ripple';
-    r.style.cssText=`width:${d}px;height:${d}px;left:${e.clientX-rect.left-d/2}px;top:${e.clientY-rect.top-d/2}px`;
-    this.appendChild(r);
-    setTimeout(()=>r.remove(),600);
+  // Ripple on main hero CTA
+  const mainBtn=document.getElementById('btnVerProductos');
+  if(mainBtn){
+    mainBtn.classList.add('ripple-wrap');
+    mainBtn.addEventListener('pointerdown',e=>addRipple(mainBtn,e));
+  }
+  // Ripple on WA button in product detail
+  document.addEventListener('pointerdown',e=>{
+    const t=e.target.closest('.dwa');
+    if(t)addRipple(t,e);
+  });
+  // Ripple on filter tags
+  document.addEventListener('pointerdown',e=>{
+    const t=e.target.closest('.ftag,.cf-tag,.btn-buscar');
+    if(t){
+      t.classList.add('ripple-wrap');
+      addRipple(t,e);
+    }
   });
 });
 
